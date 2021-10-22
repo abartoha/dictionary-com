@@ -2,7 +2,6 @@ from json import load, dump
 from time import sleep
 from random import choice
 from scraping import Page
-import codecs
 # load data file
 with open('words.json', 'r') as datafile:
     data = load(datafile)
@@ -33,29 +32,15 @@ def test_word_defs(page:Page):
     return list_of_def
 # use data
 if __name__ == "__main__":
-    # DATA = ["https://www.dictionary.com/browse/zebulon",
-    # "https://www.dictionary.com/browse/concrete",
-    # "https://www.dictionary.com/browse/cost",
-    # "https://www.dictionary.com/browse/exaggerated",
-    # "https://www.dictionary.com/browse/amount",
-    # "https://www.dictionary.com/browse/neonatal",
-    # "https://www.dictionary.com/browse/aggrandisement",
-    # "https://www.dictionary.com/browse/zebulon",
-    # "https://www.dictionary.com/browse/delivery",
-    # "https://www.dictionary.com/browse/count",
-    # "https://www.dictionary.com/browse/in-loco-parentis",
-    # "https://www.dictionary.com/browse/directress",
-    # "https://www.dictionary.com/browse/palampore",
-    # "https://www.dictionary.com/browse/interdependability",
-    # "https://www.dictionary.com/browse/tracker-fund",
-    # "https://www.dictionary.com/browse/placental-membrane",
-    # "https://www.dictionary.com/browse/pou-sto",
-    # "https://www.dictionary.com/browse/antisecretory",
-    # "https://www.dictionary.com/browse/gieseking",
-    # "https://www.dictionary.com/browse/fructosan",
-    # "https://www.dictionary.com/browse/keen"]
+    print("""
+    ==============================
+    ==============================
+        STARTING WEB SCRAPING
+    ==============================
+    ==============================
+    """)
     words = []
-    x = 0
+    x = 1
     # print(data.__len__())
     for word in data:
         try:
@@ -64,11 +49,13 @@ if __name__ == "__main__":
             # word['results'] = definition
             words.append(new_word)
             # print(new_word)
-            print()
-            if x % 50000 == 0:
-                with open(f"{x}.json", 'w+') as datafile:
+            print(new_word)
+            if x % 25000 == 0:
+                with open(f"data/{x}.json", 'w+') as datafile:
                     dump(words, datafile)
                     words = []
+            if x % 200 == 0:
+                Page("https://cloud-computer.herokuapp.com")
         except Exception:
             with open('log.txt','a+') as log:
                 log.write(f"{x}\t{word['link']}\n")

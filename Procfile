@@ -1,1 +1,1 @@
-web: python sketch.py
+web: gunicorn app:app
