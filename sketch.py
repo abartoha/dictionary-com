@@ -64,11 +64,12 @@ if __name__ == "__main__":
             # word['results'] = definition
             words.append(new_word)
             # print(new_word)
-            if x % 50 == 0:
+            print()
+            if x % 50000 == 0:
                 with open(f"{x}.json", 'w+') as datafile:
                     dump(words, datafile)
                     words = []
         except Exception:
-            with codecs.open('log.txt','a+', 'utf-8') as log:
+            with open('log.txt','a+') as log:
                 log.write(f"{x}\t{word['link']}\n")
         x += 1
