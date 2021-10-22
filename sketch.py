@@ -1,7 +1,9 @@
 from json import load, dump
-from time import sleep
-from random import choice
+# from time import sleep
+# from random import choice
 from scraping import Page
+
+
 # load data file
 with open('words.json', 'r') as datafile:
     data = load(datafile)
@@ -66,3 +68,4 @@ if __name__ == "__main__":
             with open('log.txt','a+') as log:
                 log.write(f"{x}\t{word['link']}\n")
         x += 1
+    input("Waiting for something to happen")
