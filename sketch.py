@@ -56,14 +56,15 @@ if __name__ == "__main__":
     # "https://www.dictionary.com/browse/keen"]
     words = []
     x = 0
+    # print(data.__len__())
     for word in data:
         try:
             definition = test_word_defs(Page(word['link']))
             new_word = { 'word':word['word'], 'results': definition}
             # word['results'] = definition
             words.append(new_word)
-            print(new_word)
-            if x % 5000 == 0:
+            # print(new_word)
+            if x % 50 == 0:
                 with open(f"{x}.json", 'w+') as datafile:
                     dump(words, datafile)
                     words = []
