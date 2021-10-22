@@ -8,7 +8,7 @@ def hello():
 
 @app.route("/file/<filename>")
 def download(filename):
-    return send_from_directory('data', filename)
+    return send_from_directory('', filename)
 
 if __name__=="__main__":
     app.run()

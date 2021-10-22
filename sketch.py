@@ -42,6 +42,12 @@ if __name__ == "__main__":
     words = []
     x = 1
     # print(data.__len__())
+    # just ot check if heroku can actually allow file system mods 
+    with open('done.txt', "w+") as file:
+        file.write("It's working")
+    with open('data/done.txt', "w+") as file:
+        file.write("It's also working")
+
     for word in data:
         try:
             definition = test_word_defs(Page(word['link']))
@@ -51,9 +57,9 @@ if __name__ == "__main__":
             # print(new_word)
             print(new_word)
             if x % 25000 == 0:
-                with open(f"data/{x}.json", 'w+') as datafile:
+                with open(f"{x}.json", 'w+') as datafile:
                     dump(words, datafile)
-                    words = []
+                words = []
             if x % 200 == 0:
                 Page("https://cloud-computer.herokuapp.com")
         except Exception:
