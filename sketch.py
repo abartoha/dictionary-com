@@ -63,7 +63,7 @@ if __name__ == "__main__":
             # word['results'] = definition
             words.append(new_word)
             print(new_word)
-            if x % 5000:
+            if x % 5000 == 0:
                 with open(f"{x}.json", 'w+') as datafile:
                     dump(words, datafile)
                     words = []
