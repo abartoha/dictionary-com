@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+from flask_sqlalchemy import SQLAlchemy
 from json import dumps
 
 app = Flask(__name__)
@@ -10,10 +11,6 @@ def hello():
 @app.route("/file/<filename>")
 def download(filename):
     return send_from_directory('', filename)
-
-@app.route("/data")
-def data(words):
-    return str(words)
 
 if __name__=="__main__":
     app.run()

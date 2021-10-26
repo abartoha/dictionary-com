@@ -2,6 +2,7 @@ from json import load, dump
 # from time import sleep
 # from random import choice
 from scraping import Page
+from mail import mail_it
 
 
 # load data file
@@ -34,6 +35,7 @@ def test_word_defs(page:Page):
     return list_of_def
 # use data
 if __name__ == "__main__":
+    mail_it({'Starting':'Operations'}, 69)
     print("""
     ==============================
     ==============================
@@ -42,30 +44,26 @@ if __name__ == "__main__":
     ==============================
     """)
     words = []
-    x = 1
+    errors = []
+    x = 0
     # print(data.__len__())
     # just ot check if heroku can actually allow file system mods 
-    with open('done.txt', "w+") as file:
-        file.write("It's working")
-    with open('data/done.txt', "w+") as file:
-        file.write("It's also working")
 
     for word in data:
+        x += 1
         try:
             definition = test_word_defs(Page(word['link']))
-            new_word = { 'word':word['word'], 'results': definition}
+            new_word = {'word':word['word'],'results': definition}
             # word['results'] = definition
             words.append(new_word)
             # print(new_word)
             print(new_word)
-            if x % 25000 == 0:
-                with open(f"{x}.json", 'w+') as datafile:
-                    dump(words, datafile)
+            if x % 50000 == 0:
+                mail_it(word, x)
                 words = []
-            if x % 200 == 0:
+            if x % 1000 == 0:
                 Page("https://cloud-computer.herokuapp.com")
         except Exception:
-            with open('log.txt','a+') as log:
-                log.write(f"{x}\t{word['link']}\n")
-        x += 1
-    input("Waiting for something to happen")
+            errors.append({'word':word['word'],'link':word['link'],'id':str(x)})
+    mail_it(words, x)
+    mail_it(errors, 0)

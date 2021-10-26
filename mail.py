@@ -1,28 +1,36 @@
 import smtplib
+from os import environ
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+from json import dumps
 
-gmail_user = 'abar.toha@gmail.com'
-gmail_password = 'ManIHateThisStuffxxx69xx420'
+def mail_it(obj, count):
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+        smtp.login(environ['EMAIL'], environ['PASS'])
+        print('logged in')
+        # email content
+        subject = f"Dictionary Words {count}"
+        body = f"Here are the words objects for dictionaries {count-25000} to {count}"
+        msg = MIMEMultipart()
+        msg['From'] = environ['EMAIL']
+        msg['To'] = COMMASPACE.join('abar.toha2@gmail.com')
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body))
+        print('main body written')
+        # email attachment (binary)
+        part = MIMEApplication(dumps(obj).encode('utf-8'), Name=f"dictionary-{count}.json")
+        part['Content-Disposition'] = f'attachment; filename="dictionary-{count}.json"'
+        msg.attach(part)
+        print('attachment done')
+        #send
+        smtp.sendmail(environ['EMAIL'], msg.as_string())
+        print('sent')
 
-sent_from = gmail_user
-to = ['abar.toha2@gmail.com']
-subject = 'TEST'
-body = 'IT WORKS\n\n- You'
-
-email_text = """\
-From: %s
-To: %s
-Subject: %s
-
-%s
-""" % (sent_from, ", ".join(to), subject, body)
-
-try:
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.ehlo()
-    server.login(gmail_user, gmail_password)
-    server.sendmail(sent_from, to, email_text)
-    server.close()
-
-    print ('Email sent!')
-except Exception as e:
-    print (e)
+if __name__=="__main__":
+    mail_it({'name':'AlRazi'}, 25000)
