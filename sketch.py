@@ -54,9 +54,9 @@ if __name__ == "__main__":
             # word['results'] = definition
             words.append(new_word)
             # print(new_word)
-            print(new_word)
+            print(words.__len__())
             if x % 50000 == 0:
-                mail_it(word, x)
+                mail_it(words, x)
                 words = []
             if x % 1000 == 0:
                 Page("https://cloud-computer.herokuapp.com")
