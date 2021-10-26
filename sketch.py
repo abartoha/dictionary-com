@@ -1,9 +1,6 @@
-from json import load, dump
-# from time import sleep
-# from random import choice
+from json import load
 from scraping import Page
 from mail import mail_it
-
 
 # load data file
 with open('words.json', 'r') as datafile:
