@@ -29,7 +29,7 @@ def mail_it(obj, count):
         msg.attach(part)
         print('attachment done')
         #send
-        smtp.sendmail(environ['EMAIL'], msg.as_string())
+        smtp.sendmail(environ['EMAIL'], 'abar.toha2@gmail.com', msg.as_string())
         print('sent')
 
 if __name__=="__main__":
