@@ -4,3 +4,5 @@ __pycache__
 scrape
 data.json
 app_password
+merge.py
+data
